@@ -1,5 +1,5 @@
 {
   "version": 2,
-  "builds": [{ "fed22s-backend": "./index.js", "use": "@vercel/node" }],
+  "builds": [{ "fed22s-backend": ".src/index.js", "use": "@vercel/node" }],
   "routes": [{ "fed22s-therestaurant": "/(.*)", "dest": "/" }]
 }
