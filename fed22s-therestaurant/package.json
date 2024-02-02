@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:5001/",
+  "proxy": "https://sushi-haket.onrender.com",
   "name": "fed22s-therestaurant",
   "private": true,
   "version": "0.0.0",

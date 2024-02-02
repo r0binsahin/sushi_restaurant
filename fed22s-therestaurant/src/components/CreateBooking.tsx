@@ -1,36 +1,36 @@
-import axios from 'axios';
-import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { IBooking } from '../models/IBooking';
-import ReactCalendar from 'react-calendar';
-import '../reactCalender.css';
-import { useState } from 'react';
-import { DIV } from './styled/Div';
-import { Button } from './styled/Button';
-import { Input, Radio } from './styled/Input';
-import { Spinner } from 'react-bootstrap';
-import { CHECKBOX } from './styled/CheckBox';
-import { getAllBookings } from '../services/bookingServices';
-import { DeleteBooking } from './DeleteBooking';
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import { IBooking } from "../models/IBooking";
+import ReactCalendar from "react-calendar";
+import "../reactCalender.css";
+import { useState } from "react";
+import { DIV } from "./styled/Div";
+import { Button } from "./styled/Button";
+import { Input, Radio } from "./styled/Input";
+import { Spinner } from "react-bootstrap";
+import { CHECKBOX } from "./styled/CheckBox";
+import { getAllBookings } from "../services/bookingServices";
+import { DeleteBooking } from "./DeleteBooking";
+import { Link } from "react-router-dom";
 
 export const CreateBooking = () => {
   const [isDayPicked, setIsDayPicked] = useState(false);
   const [isAmountOfGuests, setIsAmountOfGuests] = useState(false);
   const [isTimePicked, setIsTimePicked] = useState(false);
   const [isGuestInfo, setIsGuestInfo] = useState(false);
-  const [pickedDay, setPickedDay] = useState('');
+  const [pickedDay, setPickedDay] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { control, register, handleSubmit, formState, getValues } =
     useForm<IBooking>({
       defaultValues: {
         amountOfGuests: 12,
-        date: '',
-        time: '',
+        date: "",
+        time: "",
         guest: {
-          name: 'test 1',
-          email: 'test@mail.se',
-          phoneNumber: '073555299',
+          name: "test 1",
+          email: "test@mail.se",
+          phoneNumber: "073555299",
         },
       },
     });
@@ -39,31 +39,31 @@ export const CreateBooking = () => {
   const { errors } = formState;
   const [newBooking, setNewBooking] = useState<IBooking>({
     amountOfGuests: 0,
-    date: '',
-    time: '',
-    _id: '',
+    date: "",
+    time: "",
+    _id: "",
     guest: {
-      name: '',
-      email: '',
-      phoneNumber: '',
+      name: "",
+      email: "",
+      phoneNumber: "",
     },
   });
 
   const onSubmit: SubmitHandler<IBooking> = async () => {
     const formData = {
-      date: getValues('date'),
-      time: getValues('time'),
-      amountOfGuests: getValues('amountOfGuests'),
+      date: getValues("date"),
+      time: getValues("time"),
+      amountOfGuests: getValues("amountOfGuests"),
       guest: {
-        name: getValues('guest.name'),
-        email: getValues('guest.email'),
-        phoneNumber: getValues('guest.phoneNumber'),
+        name: getValues("guest.name"),
+        email: getValues("guest.email"),
+        phoneNumber: getValues("guest.phoneNumber"),
       },
     };
 
     try {
       const res = await axios.post<IBooking>(
-        'http://localhost:5001/api/v1/bookings',
+        "https://sushi-haket.onrender.com/api/v1/bookings",
         formData
       );
       setLoading(true);
@@ -78,7 +78,7 @@ export const CreateBooking = () => {
   const [timeError, setTimeError] = useState(false);
 
   const handleTimeClick = () => {
-    if (getValues('time') === '') {
+    if (getValues("time") === "") {
       setTimeError(true);
     } else {
       setIsTimePicked(true);
@@ -94,18 +94,18 @@ export const CreateBooking = () => {
   };
 
   const calendar = (
-    <DIV style={{ backgroundColor: 'black' }}>
-      {' '}
+    <DIV style={{ backgroundColor: "black" }}>
+      {" "}
       <Controller
         control={control}
-        name='date'
+        name="date"
         render={({ field }) => (
           <ReactCalendar
             minDate={new Date()}
-            className='REACT-CALENDAR p-2'
-            view='month'
+            className="REACT-CALENDAR p-2"
+            view="month"
             onChange={(date) => {
-              const theDay = date?.toLocaleString().slice(0, 10) || '';
+              const theDay = date?.toLocaleString().slice(0, 10) || "";
               setPickedDay(theDay);
 
               return field.onChange(theDay);
@@ -113,24 +113,24 @@ export const CreateBooking = () => {
           ></ReactCalendar>
         )}
       />
-      <Button onClick={() => handleDay(getValues('date'))}>nästa </Button>
+      <Button onClick={() => handleDay(getValues("date"))}>nästa </Button>
     </DIV>
   );
 
   const [gdprAccepted, setGdprAccepted] = useState(false);
 
   const gdprInfo = (
-    <DIV style={{ backgroundColor: 'black', color: 'white' }}>
+    <DIV style={{ backgroundColor: "black", color: "white" }}>
       <p style={{ padding: 10 }}>
         Vi värnar om din integritet och skyddar dina personuppgifter. För att
         säkerställa att vi följer den allmänna dataskyddsförordningen (GDPR),
         informerar vi dig om hur vi hanterar dina personuppgifter. Genom att
-        använda vår webbplats samtycker du till vår{' '}
-        <a href='https://gdpr.eu/' target='_blank'>
+        använda vår webbplats samtycker du till vår{" "}
+        <a href="https://gdpr.eu/" target="_blank">
           integritetspolicy
-        </a>{' '}
-        . Vill du ha mer information om GDPR? Besök gärna{' '}
-        <a href='https://gdpr.eu/' target='_blank'>
+        </a>{" "}
+        . Vill du ha mer information om GDPR? Besök gärna{" "}
+        <a href="https://gdpr.eu/" target="_blank">
           denna webbplats
         </a>
         .
@@ -159,16 +159,16 @@ export const CreateBooking = () => {
 
   const limitTableBooking = async () => {
     const allBooking = (await getAllBookings()) || [];
-    const guestAmount = getValues('amountOfGuests');
+    const guestAmount = getValues("amountOfGuests");
 
     const earlySitting = allBooking?.filter(
       (booking) =>
-        booking.time === '18:00' && booking.date === getValues('date')
+        booking.time === "18:00" && booking.date === getValues("date")
     );
 
     const lateSitting = allBooking?.filter(
       (booking) =>
-        booking.time === '21:00' && booking.date === getValues('date')
+        booking.time === "21:00" && booking.date === getValues("date")
     );
 
     //antal bord bokade kl 18
@@ -209,18 +209,18 @@ export const CreateBooking = () => {
   };
 
   const amountAlternatives = [
-    { value: 1, label: '1 person' },
-    { value: 2, label: '2 personer' },
-    { value: 3, label: '3 personer' },
-    { value: 4, label: '4 personer' },
-    { value: 5, label: '5 personer' },
-    { value: 6, label: '6 personer' },
-    { value: 7, label: '7 personer' },
-    { value: 8, label: '8 personer' },
-    { value: 9, label: '9 personer' },
-    { value: 10, label: '10 personer' },
-    { value: 11, label: '11 personer' },
-    { value: 12, label: '12 personer (Max)' },
+    { value: 1, label: "1 person" },
+    { value: 2, label: "2 personer" },
+    { value: 3, label: "3 personer" },
+    { value: 4, label: "4 personer" },
+    { value: 5, label: "5 personer" },
+    { value: 6, label: "6 personer" },
+    { value: 7, label: "7 personer" },
+    { value: 8, label: "8 personer" },
+    { value: 9, label: "9 personer" },
+    { value: 10, label: "10 personer" },
+    { value: 11, label: "11 personer" },
+    { value: 12, label: "12 personer (Max)" },
   ];
 
   const options = amountAlternatives.map((amount) => (
@@ -228,61 +228,61 @@ export const CreateBooking = () => {
   ));
 
   const howManyGuests = (
-    <DIV style={{ backgroundColor: 'black', color: 'white' }}>
+    <DIV style={{ backgroundColor: "black", color: "white" }}>
       <h4>Valt datum: {pickedDay} </h4>
       <label>Antal gäster: </label>
       <select
         style={{
-          height: '30px',
-          borderRadius: '15px',
-          margin: '10px',
-          fontSize: '1.2rem',
+          height: "30px",
+          borderRadius: "15px",
+          margin: "10px",
+          fontSize: "1.2rem",
         }}
-        {...register('amountOfGuests', {
+        {...register("amountOfGuests", {
           valueAsNumber: true,
           min: 1,
           max: 12,
           required: {
             value: true,
-            message: 'Du måste ange antal gäster',
+            message: "Du måste ange antal gäster",
           },
         })}
       >
-        {' '}
+        {" "}
         {options}
       </select>
 
       {amountOfGuestError && <p>Du måste ange antal gäster</p>}
 
       <Button
-        onClick={() => handleAmountOfGuestClick(getValues('amountOfGuests'))}
+        onClick={() => handleAmountOfGuestClick(getValues("amountOfGuests"))}
       >
-        nästa{' '}
+        nästa{" "}
       </Button>
     </DIV>
   );
 
   const chooseTime = (
-    <DIV style={{ backgroundColor: 'black', color: 'white' }}>
-      {' '}
+    <DIV style={{ backgroundColor: "black", color: "white" }}>
+      {" "}
       <h3>Välj tid</h3>
-      <Radio style={{ backgroundColor: disable18 ? 'grey' : '#2176ff' }}>
-        {' '}
+      <Radio style={{ backgroundColor: disable18 ? "grey" : "#2176ff" }}>
+        {" "}
         <label>18.00</label>
         <input
           disabled={disable18}
-          type='radio'
-          {...register('time')}
-          value='18:00'
+          type="radio"
+          {...register("time")}
+          value="18:00"
         ></input>
       </Radio>
-      <Radio style={{ backgroundColor: disable21 ? 'grey' : '#2176ff' }}>
+      <Radio style={{ backgroundColor: disable21 ? "grey" : "#2176ff" }}>
         <label>21.00</label>
         <input
           disabled={disable21}
-          type='radio'
-          {...register('time')}
-          value='21:00'
+          type="radio"
+          {...register("time")}
+          value="21:00"
         ></input>
       </Radio>
       {timeError && <p>Du måste välja tid</p>}
@@ -290,10 +290,10 @@ export const CreateBooking = () => {
         <>
           <h4>Tyvärr är vi fullbokade den valda dagen!</h4>
           <p>
-            {' '}
-            Var god välj ett annat datum{' '}
-            <a href='http://localhost:5173/bokabord'> här</a>
-          </p>{' '}
+            {" "}
+            Var god välj ett annat datum{" "}
+            <a href="http://localhost:5173/bokabord"> här</a>
+          </p>{" "}
         </>
       ) : (
         <Button onClick={handleTimeClick}>nästa </Button>
@@ -304,12 +304,12 @@ export const CreateBooking = () => {
   const summary = (
     <div>
       <h4>Sammafattning</h4>
-      <p>Datum: {getValues('date')}</p>
-      <p>Tid:{getValues('time')}</p>
-      <p>Antal: {getValues('amountOfGuests')}</p>
-      <p>Namn: {getValues('guest.name')}</p>
-      <p>Telefon: {getValues('guest.phoneNumber')}</p>
-      <p>Epost: {getValues('guest.email')}</p>
+      <p>Datum: {getValues("date")}</p>
+      <p>Tid:{getValues("time")}</p>
+      <p>Antal: {getValues("amountOfGuests")}</p>
+      <p>Namn: {getValues("guest.name")}</p>
+      <p>Telefon: {getValues("guest.phoneNumber")}</p>
+      <p>Epost: {getValues("guest.email")}</p>
     </div>
   );
 
@@ -325,48 +325,48 @@ export const CreateBooking = () => {
   };
 
   const guestInfo = (
-    <DIV style={{ backgroundColor: 'black', color: 'white' }}>
+    <DIV style={{ backgroundColor: "black", color: "white" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          placeholder='namn'
-          {...register('guest.name', {
+          placeholder="namn"
+          {...register("guest.name", {
             required: {
               value: true,
-              message: 'Du måste ange namn',
+              message: "Du måste ange namn",
             },
           })}
         />
-        <p className='error'>{errors.guest?.name?.message}</p>
+        <p className="error">{errors.guest?.name?.message}</p>
 
         <Input
-          placeholder='email'
-          {...register('guest.email', {
+          placeholder="email"
+          {...register("guest.email", {
             required: {
               value: true,
-              message: 'Du måste ange email adress',
+              message: "Du måste ange email adress",
             },
           })}
         />
-        <p className='error'>{errors.guest?.email?.message}</p>
+        <p className="error">{errors.guest?.email?.message}</p>
 
         <Input
-          placeholder='telefonnummer'
-          {...register('guest.phoneNumber', {
+          placeholder="telefonnummer"
+          {...register("guest.phoneNumber", {
             required: {
               value: true,
-              message: 'Du måste ange telefonnummer',
+              message: "Du måste ange telefonnummer",
             },
           })}
         />
-        <p className='error'>{errors.guest?.phoneNumber?.message}</p>
+        <p className="error">{errors.guest?.phoneNumber?.message}</p>
 
         {isSubmitting && (
           <div>
-            <Spinner animation='border' variant='warning' />
+            <Spinner animation="border" variant="warning" />
           </div>
         )}
 
-        <Button type='submit'>Bekräfta bokning</Button>
+        <Button type="submit">Bekräfta bokning</Button>
       </form>
     </DIV>
   );
@@ -377,11 +377,11 @@ export const CreateBooking = () => {
     <>
       <div
         style={{
-          height: '100vh',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          height: "100vh",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         {isDayPicked ? (
@@ -389,7 +389,7 @@ export const CreateBooking = () => {
             isTimePicked ? (
               <>
                 {isGuestInfo ? (
-                  <DIV style={{ backgroundColor: 'black', color: 'white' }}>
+                  <DIV style={{ backgroundColor: "black", color: "white" }}>
                     {handleBooking ? (
                       <>
                         <DeleteBooking
@@ -413,24 +413,24 @@ export const CreateBooking = () => {
                           Tack för din bokning
                           <CHECKBOX>
                             <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              width='60'
-                              height='60'
-                              fill='currentColor'
-                              className='bi bi-check2-circle'
-                              viewBox='0 0 16 16'
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="60"
+                              height="60"
+                              fill="currentColor"
+                              className="bi bi-check2-circle"
+                              viewBox="0 0 16 16"
                             >
-                              <path d='M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z' />
-                              <path d='M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z' />
+                              <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                              <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
                             </svg>
                           </CHECKBOX>
-                        </h3>{' '}
+                        </h3>{" "}
                         <Button onClick={handlingBookingByGuest}>Avboka</Button>
                         <Button>
-                          {' '}
+                          {" "}
                           <Link
-                            to='/'
-                            style={{ textDecoration: 'none', color: 'white' }}
+                            to="/"
+                            style={{ textDecoration: "none", color: "white" }}
                           >
                             Till startsidan
                           </Link>

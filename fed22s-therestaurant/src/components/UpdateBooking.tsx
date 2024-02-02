@@ -1,14 +1,14 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
-import { IBooking } from '../models/IBooking';
-import { BookingDispatchContext } from './context/BookingDispatchContext';
-import axios from 'axios';
-import { ActionType } from './reducers/BookingReducer';
-import { Form } from 'react-router-dom';
-import { DIV } from './styled/Div';
-import { Button } from './styled/Button';
-import { Input } from './styled/Input';
-import { Spinner } from 'react-bootstrap';
-import { UPDATE } from './styled/Update';
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { IBooking } from "../models/IBooking";
+import { BookingDispatchContext } from "./context/BookingDispatchContext";
+import axios from "axios";
+import { ActionType } from "./reducers/BookingReducer";
+import { Form } from "react-router-dom";
+import { DIV } from "./styled/Div";
+import { Button } from "./styled/Button";
+import { Input } from "./styled/Input";
+import { Spinner } from "react-bootstrap";
+import { UPDATE } from "./styled/Update";
 
 interface IUpdateBookingProps {
   booking: IBooking;
@@ -27,7 +27,7 @@ export const UpdateBooking = ({ booking }: IUpdateBookingProps) => {
   const handleSubmit = async () => {
     try {
       await axios.put<IBooking>(
-        `http://localhost:5001/api/v1/bookings/${booking._id}`,
+        `https://sushi-haket.onrender.com/api/v1/bookings/${booking._id}`,
         updatedBooking
       );
     } catch (error) {
@@ -57,53 +57,53 @@ export const UpdateBooking = ({ booking }: IUpdateBookingProps) => {
   return (
     <>
       {isUpdated ? (
-        <DIV style={{ textAlign: 'center' }}>
+        <DIV style={{ textAlign: "center" }}>
           <h4>Uppdatering genomfört!</h4>
         </DIV>
       ) : (
         <Form onSubmit={handleSubmit}>
-          {!loading && <Spinner animation='border' variant='warning' />}
+          {!loading && <Spinner animation="border" variant="warning" />}
           <UPDATE>
             <label>Namn</label>
             <Input
-              name='name'
-              type='text'
+              name="name"
+              type="text"
               defaultValue={booking.guest.name}
               onChange={handleGuestChange}
             />
             <label>Telefonnummer</label>
             <input
-              name='phoneNumber'
-              type='text'
+              name="phoneNumber"
+              type="text"
               defaultValue={booking.guest.phoneNumber}
               onChange={handleGuestChange}
             />
             <label>E-post</label>
             <Input
-              name='email'
-              type='text'
+              name="email"
+              type="text"
               defaultValue={booking.guest.email}
               onChange={handleGuestChange}
             />
             <label>Antal gäster</label>
             <input
-              name='amountOfGuests'
-              type='number'
+              name="amountOfGuests"
+              type="number"
               defaultValue={booking.amountOfGuests}
               onChange={handleChange}
             />
             <label>Datum</label>
             <Input
-              name='date'
-              type='text'
+              name="date"
+              type="text"
               defaultValue={updatedBooking.date}
               onChange={handleChange}
             />
 
             <label>Tid</label>
             <Input
-              name='time'
-              type='text'
+              name="time"
+              type="text"
               defaultValue={booking.time}
               onChange={handleChange}
             />
