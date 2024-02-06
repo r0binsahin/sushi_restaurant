@@ -1,9 +1,8 @@
-import { useReducer } from 'react';
-import { BookingReducer } from './reducers/BookingReducer';
-import { BookingContext } from './context/BookingContext';
-import { BookingDispatchContext } from './context/BookingDispatchContext';
-import { Bookings } from './Bookings';
-import { DeleteBooking } from './DeleteBooking';
+import { useReducer } from "react";
+import { BookingReducer } from "./reducers/BookingReducer";
+import { BookingContext } from "./context/BookingContext";
+import { BookingDispatchContext } from "./context/BookingDispatchContext";
+import { Bookings } from "./Bookings";
 
 export const BookingApp = () => {
   const [bookings, dispatch] = useReducer(BookingReducer, []);

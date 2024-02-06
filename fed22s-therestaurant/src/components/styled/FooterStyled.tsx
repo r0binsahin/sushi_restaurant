@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { styled } from "styled-components";
 
 export const FooterStyled = styled.footer`
   width: 100%;
@@ -6,10 +6,12 @@ export const FooterStyled = styled.footer`
   flex-direction: column;
   align-items: flex-start;
   margin: 0;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 1rem;
   margin-top: 50px;
   border-top: 8px solid #daa520;
+
+  bottom: 0;
 
   @media screen and (min-width: 1200px) {
     justify-content: center;
