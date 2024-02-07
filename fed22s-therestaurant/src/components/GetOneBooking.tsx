@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { IBooking } from '../models/IBooking';
-import { BOOKINGBUTTON } from './styled/BookingButton';
-import { UpdateBooking } from './UpdateBooking';
-import { DeleteBooking } from './DeleteBooking';
+import { useState } from "react";
+import { IBooking } from "../models/IBooking";
+import { BOOKINGBUTTON } from "./styled/BookingButton";
+import { UpdateBooking } from "./UpdateBooking";
+import { DeleteBooking } from "./DeleteBooking";
 
 interface IBookingDisplayProp {
   booking: IBooking;
@@ -18,19 +18,18 @@ export const GetOneBooking = ({ booking, remove }: IBookingDisplayProp) => {
       <BOOKINGBUTTON>
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
           }}
         >
-          {' '}
           <button onClick={() => setUpdateMode(!updateMode)}>Uppdatera</button>
           <button onClick={() => setDeleteMode(!deleteMode)}>Avboka</button>
           {}
         </div>
       </BOOKINGBUTTON>
 
-      {updateMode ? <UpdateBooking booking={booking}></UpdateBooking> : ' '}
+      {updateMode ? <UpdateBooking booking={booking}></UpdateBooking> : " "}
       {deleteMode ? (
         <DeleteBooking
           handleDiscard={() => null}
@@ -38,7 +37,7 @@ export const GetOneBooking = ({ booking, remove }: IBookingDisplayProp) => {
           removeFiltered={remove}
         ></DeleteBooking>
       ) : (
-        ' '
+        " "
       )}
     </>
   );
