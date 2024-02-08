@@ -31,9 +31,7 @@ const port = process.env.PORT || 5002;
 const run = async () => {
   try {
     mongoose.set("strictQuery", false);
-    const conn = await await mongoose.connect(
-      "mongodb+srv://robinsahin88:robsah88@cluster0.0dsqczm.mongodb.net/?retryWrites=true&w=majority"
-    );
+    const conn = await await mongoose.connect(process.env.MONGO_DB);
 
     app.listen(port, () => {
       console.log(`Server running on http://localhost:${port}`);
