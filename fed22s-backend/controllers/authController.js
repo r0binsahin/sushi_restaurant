@@ -54,8 +54,8 @@ exports.login = async (req, res, next) => {
         });
       }
       if (result) {
-        let token = jwt.sign({ name: user.name }, "secretValue", {
-          expiresIn: "2h",
+        let token = jwt.sign({ name: user.name }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
         });
         res.json({
           message: "Login Successful!",
