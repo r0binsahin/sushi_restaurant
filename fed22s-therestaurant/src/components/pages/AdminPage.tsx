@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { NavbarMenu } from "../NavbarMenu";
 import { BookingContext } from "../context/BookingContext";
 import { DIV } from "../styled/Div";
+import Login from "../Login";
 
 export const AdminPage = () => {
   const [createBooking, setCreateBooking] = useState(false);
@@ -46,6 +47,8 @@ export const AdminPage = () => {
           </>
         )}
       </div>
+
+      <Login onLogin={() => {}} />
 
       <Footer></Footer>
     </>
