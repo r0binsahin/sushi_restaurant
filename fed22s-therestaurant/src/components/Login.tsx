@@ -3,9 +3,10 @@ import "../login.css";
 
 interface ILoginProps {
   onLogin: (username: string, password: string) => void;
+  handleRegister: () => void;
 }
 
-const Login = ({ onLogin }: ILoginProps) => {
+const Login = ({ onLogin, handleRegister }: ILoginProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -39,6 +40,9 @@ const Login = ({ onLogin }: ILoginProps) => {
           Login
         </button>
       </form>
+      <button type="button" onClick={handleRegister}>
+        Register
+      </button>
     </div>
   );
 };
