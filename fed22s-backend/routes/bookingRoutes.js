@@ -1,12 +1,20 @@
 const express = require("express");
 
 const router = express.Router();
-const {createBooking, updateBooking, getAllBookings, getBookingById,  deleteBooking} = require('../controllers/bookingControllers') 
+const authenticate = require("../middleware/authentication");
 
-router.post('/', createBooking)
-router.put("/:bookingId", updateBooking)
-router.get("/", getAllBookings)
-router.get("/:bookingId", getBookingById)
-router.delete("/:bookingId", deleteBooking)
+const {
+  createBooking,
+  updateBooking,
+  getAllBookings,
+  getBookingById,
+  deleteBooking,
+} = require("../controllers/bookingControllers");
+
+router.post("/", createBooking);
+router.put("/:bookingId", authenticate, updateBooking);
+router.get("/", authenticate, getAllBookings);
+router.get("/:bookingId", authenticate, getBookingById);
+router.delete("/:bookingId", authenticate, deleteBooking);
 
 module.exports = router;
