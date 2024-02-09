@@ -14,8 +14,10 @@ const login = async (username: string, password: string) => {
             JSON.stringify(response.data.token)
           );
         }
+        console.log(response.data.message);
 
-        return response.data;
+        if (response.data.message) return response.data.message;
+        else return response.data;
       });
   } catch (error) {
     console.log(error);

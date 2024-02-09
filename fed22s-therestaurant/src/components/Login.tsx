@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [inputError, setInputError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -13,11 +14,15 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await AuthService.login(username, password).then(() => {
-        navigate("/admin");
+      if (username === "" || password === "") {
+        setInputError(true);
+      } else {
+        await AuthService.login(username, password).then(() => {
+          navigate("/admin");
 
-        window.location.reload();
-      });
+          window.location.reload();
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -25,12 +30,11 @@ const Login = () => {
 
   return (
     <div className="wrapper">
-      {" "}
       <div className="login-container">
         <h2>Login</h2>
         <form>
           <div className="form-group">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="username">Användarnamn:</label>
             <input
               type="text"
               id="username"
@@ -39,7 +43,7 @@ const Login = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">Lösenord:</label>
             <input
               type="password"
               id="password"
@@ -47,6 +51,11 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {inputError && (
+            <p style={{ color: "yellow" }}>
+              Du måste ange användarnamn och lösenord!
+            </p>
+          )}
           <button type="button" onClick={(e: FormEvent) => handleLogin(e)}>
             Login
           </button>
