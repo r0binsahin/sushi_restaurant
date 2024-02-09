@@ -6,7 +6,7 @@ const login = async (username: string, password: string) => {
 
   try {
     await axios
-      .post("http://localhost:5001/api/v1/login", user)
+      .post("https://sushi-haket.onrender.com/api/v1/login", user)
       .then((response) => {
         if (response.data.token) {
           localStorage.setItem(
