@@ -38,6 +38,9 @@ export const AdminPage = () => {
           <Button onClick={() => setCreateBooking(!createBooking)}>
             Skapa ny bokning
           </Button>
+          <div>
+            <Button onClick={handleLogout}>Logga ut</Button>
+          </div>
         </div>
         {createBooking ? (
           <CreateBooking />
@@ -53,10 +56,6 @@ export const AdminPage = () => {
             )}
           </>
         )}
-
-        <div>
-          <Button onClick={handleLogout}>Logga ut</Button>
-        </div>
       </div>
     </>
   );

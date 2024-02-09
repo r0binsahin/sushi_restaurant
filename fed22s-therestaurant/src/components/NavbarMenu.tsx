@@ -5,7 +5,7 @@ import { Title } from "./styled/Title";
 
 export const NavbarMenu = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
-  /*   const token: string = JSON.parse(localStorage.getItem("userToken") || ""); */
+  const token = localStorage.getItem("userToken");
 
   const [ease, setEase] = useState(false);
 
@@ -46,8 +46,8 @@ export const NavbarMenu = () => {
             </li>
             <li className="items">
               <Link
-                to="/login"
-                /*    to={token === " " ? "/login" : "/admin"} */
+                /*     to="/login"*/
+                to={token ? "/admin" : "/login"}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 admin
