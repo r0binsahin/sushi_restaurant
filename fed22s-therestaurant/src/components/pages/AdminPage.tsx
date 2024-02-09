@@ -1,4 +1,3 @@
-import { Footer } from "../Footer";
 import { BookingApp } from "../BookingApp";
 import { Button } from "../styled/Button";
 import { CreateBooking } from "../CreateBooking";
@@ -6,42 +5,10 @@ import { useContext, useState } from "react";
 import { NavbarMenu } from "../NavbarMenu";
 import { BookingContext } from "../context/BookingContext";
 import { DIV } from "../styled/Div";
-import Login from "../Login";
-import RegisterUser from "../RegisterUser";
-import { IUser } from "../../models/IUser";
-import axios from "axios";
 
 export const AdminPage = () => {
   const [createBooking, setCreateBooking] = useState(false);
   const bookings = useContext(BookingContext);
-  const [isRegister, setIsRegister] = useState(false);
-
-  const handleRegister = () => {
-    setIsRegister(!isRegister);
-  };
-
-  const onRegister = async (
-    username: string,
-    email: string,
-    password: string
-  ) => {
-    const user: IUser = {
-      username: "hej",
-      email: "hej",
-      password: "hej",
-    };
-
-    try {
-      const res = await axios.post<IUser>(
-        "http://localhost:5001/api/v1/register",
-        user
-      );
-
-      console.log("user added", res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <>
@@ -78,14 +45,6 @@ export const AdminPage = () => {
           </>
         )}
       </div>
-
-      {isRegister ? (
-        <RegisterUser onRegister={onRegister} />
-      ) : (
-        <Login handleRegister={handleRegister} onLogin={() => {}} />
-      )}
-
-      <Footer></Footer>
     </>
   );
 };

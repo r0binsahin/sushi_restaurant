@@ -45,7 +45,7 @@ export const NavbarMenu = () => {
             </li>
             <li className="items">
               <Link
-                to="/admin"
+                to="/login"
                 style={{ textDecoration: "none", color: "white" }}
               >
                 admin

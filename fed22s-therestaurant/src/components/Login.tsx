@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import "../login.css";
+import AuthService from "../services/auth.service";
+import { useNavigate } from "react-router";
 
-interface ILoginProps {
-  onLogin: (username: string, password: string) => void;
-  handleRegister: () => void;
-}
-
-const Login = ({ onLogin, handleRegister }: ILoginProps) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    onLogin(username, password);
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      await AuthService.login(username, password).then(() => {
+        navigate("/admin");
+        window.location.reload();
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -36,13 +43,10 @@ const Login = ({ onLogin, handleRegister }: ILoginProps) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="button" onClick={handleLogin}>
+        <button type="button" onClick={(e: FormEvent) => handleLogin(e)}>
           Login
         </button>
       </form>
-      <button type="button" onClick={handleRegister}>
-        Register
-      </button>
     </div>
   );
 };
