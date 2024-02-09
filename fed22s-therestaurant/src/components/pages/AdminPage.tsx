@@ -5,10 +5,19 @@ import { useContext, useState } from "react";
 import { NavbarMenu } from "../NavbarMenu";
 import { BookingContext } from "../context/BookingContext";
 import { DIV } from "../styled/Div";
+import AuthService from "../../services/auth.service";
+import { useNavigate } from "react-router";
 
 export const AdminPage = () => {
   const [createBooking, setCreateBooking] = useState(false);
   const bookings = useContext(BookingContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    AuthService.logout();
+    navigate("/login");
+    window.location.reload();
+  };
 
   return (
     <>
@@ -44,6 +53,10 @@ export const AdminPage = () => {
             )}
           </>
         )}
+
+        <div>
+          <Button onClick={handleLogout}>Logga ut</Button>
+        </div>
       </div>
     </>
   );

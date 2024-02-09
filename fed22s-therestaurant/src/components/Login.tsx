@@ -11,9 +11,11 @@ const Login = () => {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+
     try {
       await AuthService.login(username, password).then(() => {
         navigate("/admin");
+
         window.location.reload();
       });
     } catch (error) {
@@ -22,31 +24,34 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="button" onClick={(e: FormEvent) => handleLogin(e)}>
-          Login
-        </button>
-      </form>
+    <div className="wrapper">
+      {" "}
+      <div className="login-container">
+        <h2>Login</h2>
+        <form>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="button" onClick={(e: FormEvent) => handleLogin(e)}>
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

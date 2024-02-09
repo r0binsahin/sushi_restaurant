@@ -1,17 +1,11 @@
-import { FormEvent } from "react";
 import { IUser } from "../models/IUser";
 import axios from "axios";
 
-interface ILoginProps {
-  username: string;
-  password: string;
-}
-
-const login = async ({ username, password }: ILoginProps) => {
+const login = async (username: string, password: string) => {
   const user: IUser = { username: username, password: password };
 
   try {
-    const res = await axios
+    await axios
       .post("http://localhost:5001/api/v1/login", user)
       .then((response) => {
         if (response.data.token) {

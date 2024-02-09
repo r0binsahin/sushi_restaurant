@@ -1,7 +1,13 @@
 import Login from "../Login";
+import { NavbarMenu } from "../NavbarMenu";
 
 const LoginPage = () => {
-  return <Login />;
+  return (
+    <>
+      <NavbarMenu />
+      <Login />
+    </>
+  );
 };
 
 export default LoginPage;
