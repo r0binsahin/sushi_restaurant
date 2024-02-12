@@ -5,20 +5,16 @@ const login = async (username: string, password: string) => {
   const user: IUser = { username: username, password: password };
 
   try {
-    await axios
-      .post("https://sushi-haket.onrender.com/api/v1/login", user)
-      .then((response) => {
-        if (response.data.token) {
-          localStorage.setItem(
-            "userToken",
-            JSON.stringify(response.data.token)
-          );
-        }
-        console.log(response.data.message);
+    const response = await axios.post(
+      "https://sushi-haket.onrender.com/api/v1/login",
+      user
+    );
 
-        if (response.data.message) return response.data.message;
-        else return response.data;
-      });
+    if (response.data.token) {
+      localStorage.setItem("userToken", JSON.stringify(response.data.token));
+    }
+
+    return response.data.message;
   } catch (error) {
     console.log(error);
   }
@@ -26,6 +22,7 @@ const login = async (username: string, password: string) => {
 
 const logout = () => {
   localStorage.removeItem("userToken");
+  localStorage.removeItem("message");
 };
 
 export default {

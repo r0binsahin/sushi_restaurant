@@ -7,6 +7,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [inputError, setInputError] = useState(false);
+  const [noUser, setNoUser] = useState(false);
+  const [passFail, setPassFail] = useState(false);
 
   const navigate = useNavigate();
 
@@ -14,15 +16,34 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      if (username === "" || password === "") {
-        setInputError(true);
-      } else {
-        await AuthService.login(username, password).then(() => {
-          navigate("/admin");
+      const message = await AuthService.login(username, password);
 
-          window.location.reload();
-        });
+      if (username === "" || password === "") {
+        setPassFail(false);
+        setNoUser(false);
+        setInputError(true);
       }
+
+      console.log(message);
+
+      if (username !== "" && message === "No user found") {
+        setPassFail(false);
+        setInputError(false);
+        setNoUser(true);
+      }
+
+      if (message === "Password wrong!") {
+        setNoUser(false);
+        setInputError(false);
+        setPassFail(true);
+      }
+
+      if (message === "Login Successful!") {
+        navigate("/admin");
+        window.location.reload();
+      }
+
+      console.log(noUser);
     } catch (error) {
       console.log(error);
     }
@@ -56,6 +77,8 @@ const Login = () => {
               Du måste ange användarnamn och lösenord!
             </p>
           )}
+          {noUser && <p style={{ color: "yellow" }}>Fel användarnamn</p>}
+          {passFail && <p style={{ color: "yellow" }}>Fel lösenord </p>}
           <button type="button" onClick={(e: FormEvent) => handleLogin(e)}>
             Login
           </button>
